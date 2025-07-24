@@ -1,34 +1,36 @@
 <template>
   <div>
-    <h1>My Firt Vue</h1>
-    <p>Likes :  {{ likes }}</p>
-    <p v-if="likes > 0">Like > 0 </p>
-    <p v-else>Like = 0</p>
-    <button @click="LikeAndSubscribe()">Like And Subscribe</button>
-    <button @click="likeStatus = !likeStatus">Like Button</button>
-    <p v-if="likeStatus">Like Clicked</p>
-    <p v-else>Like not clicked</p>
-    <input v-model="likes"></input>
-    <p>Input : {{ likes }}</p>
-    <p v-show="unLikes > 0">UnLikes {{ unLikes }}</p>
+    <button @click="increment">Click increase</button>
+    
+    <p>Count: {{ count }}</p>
+    <p v-text="toDos.name"></p>
+    <ul>
+      <li v-for="item in itemList" :key="item">{{ item }}</li>
+    </ul>
+
+    <button @click="toggleStatus">Toggle button</button>
   </div>
   
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      likes : 0,
-      unLikes : 0,
-      likeStatus : false
-    }
-  },
-  methods : {
-    LikeAndSubscribe(){
-      this.likes++;
-      alert('like increase')
-    }
-  }
+<script setup>
+import { ref, reactive } from 'vue';
+
+const count = ref(0);
+const status = ref(false)
+const toDos = reactive({
+  name : 'Task1',
+  completed : false
+})
+const itemList = ['Item 1', 'Item 2', 'Item 3'];
+
+function increment(){
+  count.value++;
+  alert('Count incremented to ' + count.value);
+}
+
+const toggleStatus = () => {  
+  status.value = !status.value;
+  alert('Status toggled to ' + (status.value ? 'ON' : 'OFF'));
 }
 </script>
