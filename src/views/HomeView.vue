@@ -9,7 +9,12 @@
     </form>
 
     <ul>
-        <li v-for="(task, index) in tasks" :key="task">{{ task }}</li>
+        <li v-for="(task, index) in tasks" :key="task">
+            {{ task }}
+            <span >
+                <button @click="deleteTask(index)">*</button>
+            </span>
+        </li>
     </ul>
 </template>
 
@@ -24,4 +29,7 @@ const submitTask = () =>{
         newTask.value = '';
     }
 };
+const deleteTask = (index) =>{
+    tasks.value.splice(index, 1);
+}
 </script>
