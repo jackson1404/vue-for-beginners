@@ -5,3 +5,7 @@ export async function fetchUsers() {
     if(!apiData.ok){ throw new Error('Fail to load users')};
     return await apiData.json();
 }
+
+export async function addNewUser() {
+    
+}
