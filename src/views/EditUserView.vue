@@ -1,5 +1,20 @@
 <template>
-    <h1>User Edit Page for this user Id: {{ userId }}</h1>
+    <div>
+        <h1>User Edit Page for this user Id: {{ userId }}</h1>
+        <div v-if="user">
+            <p>User Name: </p>
+            <input v-model="user.userName"></input>
+            <p>User Email: </p>
+            <input v-model="user.userEmail"></input>
+            <p>User Address: </p>
+            <input v-model="user.userAddress"></input>
+
+            <button @click="updateUser">Update</button>
+        </div>
+        <div v-else>
+            <h3>Loading user...</h3>
+        </div>
+    </div>
 
 </template>
 <script setup>
