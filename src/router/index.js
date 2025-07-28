@@ -28,7 +28,7 @@ const routes = [
         component: AddNewUserView
     },
     {
-        path: '/edituser',
+        path: '/edituser/:userId',
         name: 'EditUserView',
         component: EditUserView
     }
