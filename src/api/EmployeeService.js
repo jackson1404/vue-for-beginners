@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8080/api/v1';
 
-export const fetchUsers = () => axios.get(`${BASE_URL}/getAllUsers`).then(res => res.data);
+export const fetchUsers = () => axios.get(`${BASE_URL}/users/getAllUsers`).then(res => res.data);
 
 export const registerUser = (userData) => axios.post(`${BASE_URL}/auth/userSignUp`, userData).then(res => res.data);
 

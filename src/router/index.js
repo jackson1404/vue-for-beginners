@@ -4,6 +4,7 @@ import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import UserListView from "@/views/UserListView.vue";
 import AddNewUserView from '@/views/AddNewUserView.vue';
+import EditUserView from '@/views/EditUserView.vue';
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         path: '/adduser',
         name: '/AddNewUserView',
         component: AddNewUserView
+    },
+    {
+        path: '/edituser',
+        name: 'EditUserView',
+        component: EditUserView
     }
 ]
 
