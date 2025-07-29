@@ -35,7 +35,6 @@ onMounted(async () => {
     }
 })
 
-
 const goEditUser = (userId) => {
     console.log('Reach', userId);
     router.push({name: 'EditUserView', params: {userId}})

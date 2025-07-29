@@ -19,6 +19,7 @@
 <script setup>
 import { ref } from 'vue';
 import {registerUser} from '@/api/EmployeeService.js';
+import { toast } from 'vue3-toastify';
 
 const newUser = ref({
     userName: '',
@@ -30,9 +31,9 @@ const newUser = ref({
 const submitForm = async () => {
     try{
         const response = await registerUser(newUser.value);
-        alert('User successfully registered');
+        toast.success("user added succesfully")
     }catch(error){
-        alert('Error submit new user', error);
+       toast.error('Error submit new user', error);
     }
 
 }
