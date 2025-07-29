@@ -3,6 +3,7 @@
     <form @submit.prevent="submitForm">
         <p>User Name: </p>
         <input type="text" v-model="newUser.userName" placeholder="Enter User Name"></input>
+        <span v-if="errors.userName" class="error">{{ errors.userName }}</span>
         <br></br>
         <p>User Email: </p>
         <input type="email" v-model="newUser.userEmail" placeholder="Enter User Email"></input>
@@ -20,7 +21,6 @@
 import { ref } from 'vue';
 import {registerUser} from '@/api/EmployeeService.js';
 import { toast } from 'vue3-toastify';
-
 const newUser = ref({
     userName: '',
     userEmail: '',
@@ -28,7 +28,26 @@ const newUser = ref({
     userAddress: '',
     isEmailVerificationRequired: false
 })
+
+const errors = ref({});
+
+const validateForm = () => {
+    errors.value = {};
+
+    if(!newUser.value.userName){
+        errors.value.userName = 'User Name is required';
+    }
+
+    return Object.keys(errors.value).length == 0;
+
+}
+
 const submitForm = async () => {
+
+    if(!validateForm()){
+        return;
+    }
+
     try{
         const response = await registerUser(newUser.value);
         toast.success("user added succesfully")
@@ -38,3 +57,9 @@ const submitForm = async () => {
 
 }
 </script>   
+<style scoped>
+.error{
+    color: red;
+    font-size: 0.9em;
+}
+</style>
