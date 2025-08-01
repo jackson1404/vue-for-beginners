@@ -14,6 +14,8 @@
         <p>User Address: </p>
         <input type="text" v-model="newUser.userAddress" placeholder="Enter User Address"></input>
         <br></br>
+        <p>Profile Image:</p>
+        <input type="file" @change="selectFile"></input>
         <button type="submit">Sign Up</button>
     </form>
 </template>
@@ -30,8 +32,13 @@ const newUser = ref({
 })
 
 const errors = ref({});
+const file = ref(null);
 
-const validateForm = () => {
+const selectFile = (event) => {
+    file.value = event.target.files[0];
+}
+
+const validateForm = () => {  
     errors.value = {};
 
     if(!newUser.value.userName){
@@ -48,8 +55,14 @@ const submitForm = async () => {
         return;
     }
 
+    const formData = new FormData();
+    formData.append("userDto", new Blob( [JSON.stringify(newUser.value)], {type: 'application/json'} ));
+    if(file.value){
+        formData.append("profileImg",file.value);
+    }
+
     try{
-        const response = await registerUser(newUser.value);
+        const response = await registerUser(formData);
         toast.success("user added succesfully")
     }catch(error){
        toast.error('Error submit new user', error);
