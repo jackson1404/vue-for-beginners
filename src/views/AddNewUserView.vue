@@ -64,6 +64,7 @@ const submitForm = async () => {
     try{
         const response = await registerUser(formData);
         toast.success("user added succesfully")
+        newUser.value = '';
     }catch(error){
        toast.error('Error submit new user', error);
     }
