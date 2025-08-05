@@ -13,4 +13,24 @@
     </div>
 </template>
 <script setup>
+import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth.js';
+import { useRouter } from 'vue-router';
+
+const username = ref('');
+const password = ref('');
+const error = ref('');
+const auth = useAuthStore();
+const route = useRouter();
+
+const submitLogin = async () => {
+    try {
+        await auth.login(username.value, password.value);
+        route.push('/')
+    } catch (err) {
+        error.value = 'Invalid Login';
+    }
+}
+
+
 </script>
