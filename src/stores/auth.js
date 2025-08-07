@@ -1,22 +1,44 @@
 import { defineStore } from "pinia";
+import api from "../api/axios";
+import { toast } from "vue3-toastify";
 import axios from "axios";
 
 export const useAuthStore = defineStore('auth', {
   
     state: () => ({
-        token: localStorage.getItem('token') || null,
+        accessToken: localStorage.getItem('accessToken') || null,
     }),
     actions: {
         async login(username, password){
-            const result = axios.post('http://localhost:8080/auth/login', {
-                username, password
-            })
-            this.token = result.data.token
-            localStorage.setItem('token', this.token)
+            const result = await api.post('/auth/login', {username, password}, {withCredentials: true})
+            this.accessToken = result.data.accessToken
+            localStorage.setItem('accessToken', this.accessToken)
         },
-        logout(){
-            this.token = null
-            localStorage.removeItem('token')
+        async refreshNewToken(){
+            const res = await api.post('/auth/refreshNewToken', {}, {withCredentials: true})
+            this.accessToken = res.data.accessToken
+        },
+        async logout(){
+            await api.post('/auth/logout')
+            this.accessToken = null
+            localStorage.removeItem('accessToken')
+        },
+        isTokenExpire(token){
+            if(!token) return true;
+            try{
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const now = Date.now() / 1000;
+                return payload.exp < now;
+            }catch (e){
+                console.error('Invalid token' , e);
+                return true;
+            }
+        },
+        checkTokenValidity(){
+            if(this.isTokenExpire(this.accessToken)){
+                console.log('Token Expired- Logged out');
+                this.logout();
+            }
         }
     }
 })

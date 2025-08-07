@@ -4,6 +4,7 @@
         <router-link to="/about">Go to About page</router-link>
         <router-link to="/users">User List</router-link>
         <router-link to="/adduser">Add New User</router-link>
+        <router-link to="/login">Login</router-link>
     </nav>
 </template>
 

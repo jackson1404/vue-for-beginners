@@ -2,7 +2,7 @@
     <div class="login">
         <h2>Login Page</h2>
         <span v-if="error">{{ error }}</span>
-        <form @click.prevent="submitLogin">
+        <form @submit.prevent="submitLogin">
             <p>User Name: </p>
             <input type="text" v-model="username" placeholder="Enter User Name"></input>
             <br></br>
@@ -28,6 +28,8 @@ const submitLogin = async () => {
         await auth.login(username.value, password.value);
         route.push('/')
     } catch (err) {
+        console.error("Login failed:", err); // <== See full error
+
         error.value = 'Invalid Login';
     }
 }

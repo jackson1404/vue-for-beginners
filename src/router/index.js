@@ -5,7 +5,7 @@ import AboutView from "@/views/AboutView.vue";
 import UserListView from "@/views/UserListView.vue";
 import AddNewUserView from '@/views/AddNewUserView.vue';
 import EditUserView from '@/views/EditUserView.vue';
-import { use } from "react";
+import LoginView from '@/views/LoginView.vue'
 
 const routes = [
     {
@@ -32,6 +32,10 @@ const routes = [
         path: '/edituser/:userId',
         name: 'EditUserView',
         component: EditUserView
+    },
+    {
+        path: '/login',
+        component: LoginView
     }
 ]
 
@@ -42,7 +46,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
-    if (to.path !== '/login' && !auth.token){
+
+    auth.checkTokenValidity();
+
+    if (to.path !== '/login' && !auth.accessToken){
         next('/login')
     } else {
         next()
